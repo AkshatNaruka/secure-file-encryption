@@ -1,41 +1,73 @@
 package main
 
 import (
-	"flag"
 	"fmt"
 	"log"
 	"secure-file-encryption/cli"
+	"github.com/manifoldco/promptui"
+	"io/ioutil"
 )
 
 func main() {
-	inputFile := flag.String("input", "", "Input file path")
-	outputFile := flag.String("output", "", "Output file path")
-	encrypt := flag.Bool("encrypt", false, "Encrypt the input file")
-	decrypt := flag.Bool("decrypt", false, "Decrypt the input file")
-
-	flag.Parse()
-
-	if *encrypt == *decrypt || (*encrypt == false && *decrypt == false) {
-		log.Fatal("Specify either -encrypt or -decrypt")
+	prompt := promptui.Select{
+		Label: "Select Action",
+		Items: []string{"Encrypt", "Decrypt"},
 	}
 
-	if (*encrypt && *decrypt) || (*encrypt && *inputFile == "") || (*decrypt && *inputFile == "") || *outputFile == "" {
-		log.Fatal("Invalid flags or missing input/output file paths")
-	}
+	_, result, err := prompt.Run()
 
-	key, err := cli.GenerateAESKey()
 	if err != nil {
-		log.Fatalf("Key generation failed: %v", err)
+		fmt.Printf("Prompt failed %v\n", err)
+		return
 	}
 
-	if *encrypt {
-		err := cli.EncryptFile(*inputFile, *outputFile, key)
+	promptInput := promptui.Prompt{
+		Label: "Input file path",
+	}
+
+	inputFile, err := promptInput.Run()
+
+	if err != nil {
+		fmt.Printf("Prompt failed %v\n", err)
+		return
+	}
+
+	promptOutput := promptui.Prompt{
+		Label: "Output file path",
+	}
+
+	outputFile, err := promptOutput.Run()
+
+	if err != nil {
+		fmt.Printf("Prompt failed %v\n", err)
+		return
+	}
+
+	var key []byte
+
+	switch result {
+	case "Encrypt":
+		key, err = cli.GenerateAESKey()
+		if err != nil {
+			log.Fatalf("Key generation failed: %v", err)
+		}
+		// Save the key to a file
+		err = ioutil.WriteFile("key.txt", key, 0644)
+		if err != nil {
+			log.Fatalf("Failed to save key: %v", err)
+		}
+		err := cli.EncryptFile(inputFile, outputFile, key)
 		if err != nil {
 			log.Fatalf("Encryption failed: %v", err)
 		}
 		fmt.Println("File encrypted successfully.")
-	} else if *decrypt {
-		err := cli.DecryptFile(*inputFile, *outputFile, key)
+	case "Decrypt":
+		// Read the key from the file
+		key, err = ioutil.ReadFile("key.txt")
+		if err != nil {
+			log.Fatalf("Failed to read key: %v", err)
+		}
+		err := cli.DecryptFile(inputFile, outputFile, key)
 		if err != nil {
 			log.Fatalf("Decryption failed: %v", err)
 		}
