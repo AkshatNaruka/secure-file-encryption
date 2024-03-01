@@ -1,67 +1,67 @@
-# Secure File Encryption Tool
+# Secure File Encryption
 
-This is a simple command-line tool for securely encrypting and decrypting files using the Advanced Encryption Standard (AES) with Galois/Counter Mode (AES-GCM). It provides a secure way to protect your sensitive data.
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+
+A secure file encryption tool written in Go.
+
+## Table of Contents
+- [Introduction](#introduction)
+- [Features](#features)
+- [Getting Started](#getting-started)
+- [Usage](#usage)
+- [Contributing](#contributing)
+- [License](#license)
+
+## Introduction
+Secure File Encryption is a command-line tool that allows you to encrypt and decrypt files using strong encryption algorithms. It provides a secure way to protect your sensitive data.
 
 ## Features
+- Encrypt files using AES-256 encryption algorithm
+- Decrypt encrypted files
+- Password-based encryption for added security
+- Fast and efficient encryption/decryption process
 
-- **File Encryption:** Encrypt your files using AES-GCM encryption for secure storage or transmission.
-- **File Decryption:** Decrypt encrypted files back to their original state.
-- **Key Generation:** Generate a secure AES encryption key for use in the encryption and decryption process.
+## Getting Started
+To get started with Secure File Encryption, follow these steps:
 
-## Prerequisites
+1. Clone the repository:
+   ```shell
+   git clone https://github.com/AkshatNaruka/secure-file-encryption
 
-Before using this tool, ensure you have the following installed:
+    cd secure-file-encryption/cmd
+    ```
 
-- Go (Golang): [https://golang.org/](https://golang.org/)
+2. Build the project:
 
+    ```shell
+    go build
+    ```
+
+3. Run the program:
+
+    ```shell
+
+    ./cmd
+    ```
 ## Usage
+To encrypt a file, use the following command:
 
-### Installation
-
-Clone this repository to your local machine:
-
-```bash
-git clone https://github.com/akshat-naruka/secure-file-encryption.git
-cd secure-file-encryption
-```
-## Building the Project
-If you haven't built the project yet, you can do so with the following command:
-```bash
-go build
-```
-## Running the Tool
-### To encrypt a file:
-```bash
-./secure-file-encryption -encrypt -input=input.txt -output=encrypted.txt
-```
-### To decrypt a file:
-```bash
-./secure-file-encryption -decrypt -input=encrypted.txt -output=decrypted.txt
+It will ask options like encrypt or decrypt and then input file path and desired output file path.
+    
+   ```shell
+    Use the arrow keys to navigate: ↓ ↑ → ← 
+    ? Select Action: 
+    ▸ Encrypt
+    Decrypt
 ```
 
-Replace the file paths (input.txt, encrypted.txt, decrypted.txt) and options with your own.
 
-## Example 
-```bash
-./secure-file-encryption -encrypt -input=example.txt -output=example_encrypted.txt
+## Contributing
+Contributions are welcome! Feel free to open an issue or submit a pull request if you find a bug or want to add a new feature.
 
+## License
 
-./secure-file-encryption -decrypt -input=example_encrypted.txt -output=example_decrypted.txt
-```
-
-# License
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-# Acknowledgments
-This project uses the Go programming language.
-Encryption is performed using the AES-GCM encryption mode.
-Key generation uses a secure random number generator.
-
-Author <b>Akshat Naruka</b>
-
-GitHub: https://github.com/AkshatNaruka
-
-Website: https://akshatnaruka.netlify.app/
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more information.
 
 
-
+ 
